@@ -19,7 +19,6 @@ public protocol UserListPresenter {
 }
 
 @Observable
-@MainActor
 public final class UserListPresenterImpl: UserListPresenter {
     
     deinit { print("\(Self.self) deinit") }

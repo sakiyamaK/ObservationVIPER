@@ -59,7 +59,6 @@ final class UserListPresenterTests: XCTestCase {
     }
     
     @Observable
-    @MainActor
     final class MockRouter: UserListRouter {
         var user: User?
         func show(user: User) {

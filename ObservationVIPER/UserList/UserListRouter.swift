@@ -12,7 +12,6 @@ public protocol UserListRouter {
     func show(user: User)
 }
 
-@MainActor
 public final class UserListRouterImpl: UserListRouter {
     
     deinit { print("\(Self.self) deinit") }
