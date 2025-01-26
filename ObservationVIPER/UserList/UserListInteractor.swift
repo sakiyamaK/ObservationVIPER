@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 public protocol UserListInteractor {
     var loading: Bool { get }
     var users: [User]? { get }

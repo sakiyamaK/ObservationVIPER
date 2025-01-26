@@ -11,7 +11,7 @@ public struct APIResult: Codable {
     var results: [User]
 }
 
-public struct API {
+public struct API: Sendable {
     private init() {}
     static let shared = API()
     

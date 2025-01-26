@@ -17,7 +17,7 @@ public final class UserListViewImpl: UIViewController, UserListView {
     func inject(presenter: UserListPresenter) {
         self.presenter = presenter
     }
-    
+
     private var diffableDataSource: UICollectionViewDiffableDataSource<Int, User>!
     
     private lazy var collectionView: UICollectionView = {
@@ -47,7 +47,7 @@ public final class UserListViewImpl: UIViewController, UserListView {
     }
     
     private func setupUI() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .systemBackground
         self.view.addSubview(activityIndicatorView)
         activityIndicatorView.applyArroundConstraint(equalTo: self.view)
 
@@ -56,44 +56,32 @@ public final class UserListViewImpl: UIViewController, UserListView {
     }
     
     private func setupObservation() {
-        collectionView
-            .observation(
-                tracking: {[weak self] in
-                    self!.presenter.initilalLoading
-                },
-                onChange: { collectionView, loading in
-                    collectionView.isHidden = loading
-                }
-            ).observation(
-                tracking: {[weak self] in
-                    self!.presenter.refreshLoading
-                }, onChange: { collectionView, refreshLoading in
-                    collectionView.refreshControl?.endRefreshing()
-                }
-            ).observation(
-                tracking: {[weak self] in
-                    self!.presenter.users
-                }, onChange: {[weak self] _, users in
-                    
-                    var snapshot = NSDiffableDataSourceSnapshot<Int, User>()
-                    snapshot.appendSections([0])
-                    snapshot.appendItems(users)
-                    self!.diffableDataSource.apply(snapshot, animatingDifferences: false)
-                }
-            )
-        
-        activityIndicatorView
-            .observation(
-                tracking: {[weak self] in
-                    self!.presenter.initilalLoading
-                }, onChange: { activityIndicatorView, loading in
-                    if loading {
-                        activityIndicatorView.startAnimating()
-                    } else {
-                        activityIndicatorView.stopAnimating()
-                    }
-                }
-            )
+        collectionView.tracking {[weak self] in
+            self?.presenter.initilalLoading
+        } onChange: { collectionView, loading in
+            collectionView.isHidden = loading
+        }.tracking {[weak self] in
+            self?.presenter.refreshLoading
+        } onChange: { collectionView, refreshLoading in
+            collectionView.refreshControl?.endRefreshing()
+        }.tracking {[weak self] in
+            self?.presenter.users
+        } onChange: {[weak self] _, users in
+            var snapshot = NSDiffableDataSourceSnapshot<Int, User>()
+            snapshot.appendSections([0])
+            snapshot.appendItems(users)
+            self!.diffableDataSource.apply(snapshot, animatingDifferences: false)
+        }
+
+        activityIndicatorView.tracking {[weak self] in
+            self?.presenter.initilalLoading
+        } onChange: { activityIndicatorView, loading in
+            if loading {
+                activityIndicatorView.startAnimating()
+            } else {
+                activityIndicatorView.stopAnimating()
+            }
+        }
     }
     
     private func setupDataSource() {

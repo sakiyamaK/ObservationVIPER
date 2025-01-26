@@ -7,10 +7,12 @@
 
 import Foundation
 
+@MainActor
 public protocol UserListRouter {
     func show(user: User)
 }
 
+@MainActor
 public final class UserListRouterImpl: UserListRouter {
     
     deinit { print("\(Self.self) deinit") }
@@ -19,19 +21,16 @@ public final class UserListRouterImpl: UserListRouter {
     init(view: UserListView!) {
         self.view = view
     }
-    
+
     public static func assembleModules() -> UserListView {
         let view = UserListViewImpl()
         let interactor = UserListInteractorImpl()
         let router = UserListRouterImpl(view: view)
         let presenter = UserListPresenterImpl(
-            view: view,
             interactor: interactor,
             router: router
         )
-        view.inject(
-            presenter: presenter
-        )
+        view.inject(presenter: presenter)
         return view
     }
     

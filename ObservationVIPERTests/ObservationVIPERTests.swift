@@ -8,6 +8,7 @@
 import XCTest
 @testable import ObservationVIPER
 
+@MainActor
 extension User {
     static var testList: [User] = [
         .init(
@@ -58,6 +59,7 @@ final class UserListPresenterTests: XCTestCase {
     }
     
     @Observable
+    @MainActor
     final class MockRouter: UserListRouter {
         var user: User?
         func show(user: User) {
@@ -67,73 +69,87 @@ final class UserListPresenterTests: XCTestCase {
     
     func test_ユーザ情報の取得() async throws {
         let view = await UserListViewImpl()
-        let mockIntearctor = MockSomeUserListInteractor()
-        let router = MockRouter()
-        let presenter = UserListPresenterImpl(view: view, interactor: mockIntearctor, router: router)
+        let mockIntearctor = await MockSomeUserListInteractor()
+        let router = await MockRouter()
+        let presenter = await UserListPresenterImpl(interactor: mockIntearctor, router: router)
         await view.inject(presenter: presenter)
-        
 
-        XCTAssertTrue(presenter.users.isEmpty)
-        XCTAssertFalse(presenter.initilalLoading)
-        XCTAssertFalse(presenter.refreshLoading)
+        Task { @MainActor in
+            XCTAssertTrue(presenter.users.isEmpty)
+            XCTAssertFalse(presenter.initilalLoading)
+            XCTAssertFalse(presenter.refreshLoading)
+        }
 
-        presenter.viewDidLoad()
+        await presenter.viewDidLoad()
 
         try await Task.sleep(nanoseconds: 000_000_100)
 
-        XCTAssertTrue(presenter.initilalLoading)
-        XCTAssertFalse(presenter.refreshLoading)
+        Task { @MainActor in
+            XCTAssertTrue(presenter.initilalLoading)
+            XCTAssertFalse(presenter.refreshLoading)
+        }
 
         try await Task.sleep(nanoseconds: 550_000_000)
 
-        XCTAssertFalse(presenter.initilalLoading)
-        XCTAssertFalse(presenter.refreshLoading)
+        Task { @MainActor in
+            XCTAssertFalse(presenter.initilalLoading)
+            XCTAssertFalse(presenter.refreshLoading)
 
-        XCTAssertTrue(!presenter.users.isEmpty)
+            XCTAssertTrue(!presenter.users.isEmpty)
+        }
     }
-    
+
     func test_ひっぱりリロード() async throws {
         let view = await UserListViewImpl()
-        let mockIntearctor = MockSomeUserListInteractor()
-        let router = UserListRouterImpl(view: view)
-        let presenter = UserListPresenterImpl(view: view, interactor: mockIntearctor, router: router)
+        let mockIntearctor = await MockSomeUserListInteractor()
+        let router = await UserListRouterImpl(view: view)
+        let presenter = await UserListPresenterImpl(interactor: mockIntearctor, router: router)
         await view.inject(presenter: presenter)
-        
-        mockIntearctor.set(users: User.testList)
 
-        XCTAssertFalse(presenter.initilalLoading)
-        XCTAssertFalse(presenter.refreshLoading)
+        await mockIntearctor.set(users: User.testList)
 
-        presenter.changeValueRefreshControl()
-        
+        Task { @MainActor in
+            XCTAssertFalse(presenter.initilalLoading)
+            XCTAssertFalse(presenter.refreshLoading)
+        }
+
+        await presenter.changeValueRefreshControl()
+
         try await Task.sleep(nanoseconds: 000_000_100)
 
-        XCTAssertFalse(presenter.initilalLoading)
-        XCTAssertTrue(presenter.refreshLoading)
-
+        Task { @MainActor in
+            XCTAssertFalse(presenter.initilalLoading)
+            XCTAssertTrue(presenter.refreshLoading)
+        }
         try await Task.sleep(nanoseconds: 550_000_000)
 
-        XCTAssertFalse(presenter.initilalLoading)
-        XCTAssertFalse(presenter.refreshLoading)
+        Task { @MainActor in
+            XCTAssertFalse(presenter.initilalLoading)
+            XCTAssertFalse(presenter.refreshLoading)
 
-        XCTAssertTrue(!presenter.users.isEmpty)
+            XCTAssertTrue(!presenter.users.isEmpty)
+        }
     }
     
     func test_ユーザの選択() async throws {
         let view = await UserListViewImpl()
-        let mockIntearctor = MockSomeUserListInteractor()
-        let router = MockRouter()
-        let presenter = UserListPresenterImpl(view: view, interactor: mockIntearctor, router: router)
+        let mockIntearctor = await MockSomeUserListInteractor()
+        let router = await MockRouter()
+        let presenter = await UserListPresenterImpl(interactor: mockIntearctor, router: router)
         await view.inject(presenter: presenter)
-        
-        mockIntearctor.set(users: User.testList)
 
-        presenter.select(indexPath: .init(item: 0, section: 0))
-        
-        XCTAssertTrue(router.user == User.testList.first)
+        await mockIntearctor.set(users: User.testList)
 
-        presenter.select(indexPath: .init(item: 1, section: 0))
+        await presenter.select(indexPath: .init(item: 0, section: 0))
 
-        XCTAssertTrue(router.user == User.testList[1])
+        Task { @MainActor in
+            XCTAssertTrue(router.user == User.testList.first)
+        }
+
+        await presenter.select(indexPath: .init(item: 1, section: 0))
+
+        Task { @MainActor in
+            XCTAssertTrue(router.user == User.testList[1])
+        }
     }
 }

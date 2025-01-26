@@ -22,7 +22,7 @@
 		B67C01182C9EBF2D00E0A4DD /* UserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67C010E2C9EBF2D00E0A4DD /* UserListView.swift */; };
 		B67C011B2C9EBF4400E0A4DD /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = B67C011A2C9EBF4400E0A4DD /* Kingfisher */; };
 		B67C01232C9EBF7700E0A4DD /* ObservationVIPERTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67C01222C9EBF7700E0A4DD /* ObservationVIPERTests.swift */; };
-		B67C01662C9EC16A00E0A4DD /* NSObject+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67C01652C9EC16A00E0A4DD /* NSObject+.swift */; };
+		B67C01662C9EC16A00E0A4DD /* UIKit+Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67C01652C9EC16A00E0A4DD /* UIKit+Observation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +53,7 @@
 		B67C010E2C9EBF2D00E0A4DD /* UserListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListView.swift; sourceTree = "<group>"; };
 		B67C01202C9EBF7700E0A4DD /* ObservationVIPERTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ObservationVIPERTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B67C01222C9EBF7700E0A4DD /* ObservationVIPERTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationVIPERTests.swift; sourceTree = "<group>"; };
-		B67C01652C9EC16A00E0A4DD /* NSObject+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+.swift"; sourceTree = "<group>"; };
+		B67C01652C9EC16A00E0A4DD /* UIKit+Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Observation.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,7 +114,7 @@
 				B67C01052C9EBF2D00E0A4DD /* KingfisherManager+.swift */,
 				B67C01062C9EBF2D00E0A4DD /* UIImage+.swift */,
 				B67C01072C9EBF2D00E0A4DD /* UIView+.swift */,
-				B67C01652C9EC16A00E0A4DD /* NSObject+.swift */,
+				B67C01652C9EC16A00E0A4DD /* UIKit+Observation.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -246,7 +246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B67C01122C9EBF2D00E0A4DD /* UIView+.swift in Sources */,
-				B67C01662C9EC16A00E0A4DD /* NSObject+.swift in Sources */,
+				B67C01662C9EC16A00E0A4DD /* UIKit+Observation.swift in Sources */,
 				B67C00F22C9EBEBB00E0A4DD /* AppDelegate.swift in Sources */,
 				B67C01162C9EBF2D00E0A4DD /* UserListPresenter.swift in Sources */,
 				B67C01112C9EBF2D00E0A4DD /* UIImage+.swift in Sources */,
@@ -431,7 +431,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sakiyama.ObservationVIPER;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -458,7 +458,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sakiyama.ObservationVIPER;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -475,7 +475,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sakiyama.ObservationVIPERTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ObservationVIPER.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ObservationVIPER";
 			};
@@ -493,7 +493,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sakiyama.ObservationVIPERTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ObservationVIPER.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ObservationVIPER";
 			};

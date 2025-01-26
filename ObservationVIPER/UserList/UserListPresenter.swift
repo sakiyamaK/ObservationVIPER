@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 public protocol UserListPresenter {
     var initilalLoading: Bool { get }
     var refreshLoading: Bool { get }
@@ -18,6 +19,7 @@ public protocol UserListPresenter {
 }
 
 @Observable
+@MainActor
 public final class UserListPresenterImpl: UserListPresenter {
     
     deinit { print("\(Self.self) deinit") }
@@ -32,16 +34,13 @@ public final class UserListPresenterImpl: UserListPresenter {
         interactor.users ?? []
     }
     
-    private weak var view: UserListView?
     private let interactor: UserListInteractor
     private let router: UserListRouter
         
     init(
-        view: UserListView,
         interactor: UserListInteractor,
         router: UserListRouter
     ) {
-        self.view = view
         self.interactor = interactor
         self.router = router
     }

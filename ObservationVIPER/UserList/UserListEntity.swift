@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import UIKit.UIImage
 
-public struct User: Codable, Hashable {
+public struct User: Codable, Hashable, Sendable {
     
     public static func == (lhs: User, rhs: User) -> Bool {
         lhs.uuid == rhs.uuid
@@ -18,7 +17,7 @@ public struct User: Codable, Hashable {
         hasher.combine(uuid)
     }
     
-    public struct Id: Codable {
+    public struct Id: Codable, Sendable {
         let name: String?
         let value: String?
         var displayName: String {
@@ -28,7 +27,7 @@ public struct User: Codable, Hashable {
             return name + ", " + value
         }
     }
-    public struct Picture: Codable {
+    public struct Picture: Codable, Sendable {
         let thumbnail: String?
     }
     

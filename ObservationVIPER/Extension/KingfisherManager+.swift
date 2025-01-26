@@ -10,8 +10,8 @@ import Kingfisher
 
 extension KingfisherManager {
     func asyncRetrieveImage(with url: URL) async throws -> UIImage {
-        try await withCheckedThrowingContinuation { continuation in
-            self.retrieveImage(with: url) { result in
+        try await withCheckedThrowingContinuation {[weak self] continuation in
+            self?.retrieveImage(with: url) { result in
                 switch result {
                 case .success(let retrieveImageResult):
                     continuation.resume(returning: retrieveImageResult.image)
